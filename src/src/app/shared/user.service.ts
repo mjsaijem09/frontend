@@ -27,8 +27,4 @@ export class UserService {
     return this.http.post(environment.apiBasedUrl + '/loginUser', user)
   }
 
-  getUserInfo(user) {
-    return this.http.get(environment.apiBasedUrl + '/userInfo', user);
-  }
-  
 }

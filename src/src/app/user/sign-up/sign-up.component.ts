@@ -40,6 +40,7 @@ export class SignUpComponent implements OnInit {
     
         err => {
           if (err.status === 422) {
+            // If email is exist in database
             this.serverErrorMessage = err.error.join('<br/>');
           }else
           this.serverErrorMessage = 'Something went wrong in your server!';
