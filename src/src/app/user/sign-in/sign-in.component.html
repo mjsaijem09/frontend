@@ -1,0 +1,59 @@
+<div class="alert alert-danger" *ngIf="serverErrorMessage">
+    {{serverErrorMessage}}
+</div>
+
+<div class="row" style="margin-top: 90px;">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        
+    <div class="card">
+        <div class="card-header" style="text-align: center;">Sign In</div>
+        <div class="card-body">
+        <form #signInform="ngForm" (ngSubmit)="signInform.valid && onSubmit(signInform)">
+            <div class="form-group">
+            <label for="exampleInputEmail1">Email</label>
+            <input type="text" 
+                    class="form-control" 
+                    id="exampleInputEmail1" 
+                    aria-describedby="emailHelp" 
+                    placeholder="Enter email"
+                    #email="ngModel" 
+                    [(ngModel)]="model.email"
+                    name="email" 
+                    [pattern]="emailRegex" 
+                    [ngClass]="{ 'is-invalid' : signInform.submitted && !email.valid }"
+                    required>
+                    <div class="invalid-feedback" *ngIf="signInform.submitted && password.errors?.required">
+                        This field is required
+                    </div>
+                    <div class="invalid-feedback" *ngIf="signInform.submitted && email.errors?.pattern">
+                        Please provide a valid email.
+                    </div>
+            </div>
+            <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" 
+                    class="form-control" 
+                    id="exampleInputPassword1" 
+                    placeholder="Password"
+                    #password="ngModel" 
+                    [(ngModel)]="model.password"
+                    name="password" 
+                    required minlength="4"
+                    [ngClass]="{ 'is-invalid' : signInform.submitted && !password.valid }">
+                <div class="invalid-feedback" *ngIf="signInform.submitted && password.errors?.minlength">
+                    Minimum of 4 characters.
+                </div>
+                <div class="invalid-feedback" *ngIf="signInform.submitted && password.errors?.required">
+                    This field is required
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+            <a href="/signup" class="btn btn-link btn-block">Register</a>
+        </form>
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-4"></div>
+</div>
+

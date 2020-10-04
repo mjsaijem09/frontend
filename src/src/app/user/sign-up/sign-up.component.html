@@ -1,0 +1,79 @@
+<div class="alert alert-success" *ngIf="showSuccessMessage">
+    Successfully registered<a href="/" style="margin: 0 0 0 15px;">Sign in now!</a>
+</div>
+
+<div class="alert alert-danger" *ngIf="serverErrorMessage">
+    {{serverErrorMessage}}
+</div>
+
+<div class="alert alert-danger" *ngIf="notMatch">
+    {{notMatch}}
+</div>
+
+<div class="row" style="margin-top: 90px;">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        
+    <div class="card">
+        <div class="card-header" style="text-align: center;">Register</div>
+        <div class="card-body">
+        <form #signUpform="ngForm" (ngSubmit)="signUpform.valid && onSubmit(signUpform)">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
+                <input type="text" 
+                        class="form-control" 
+                        id="exampleInputEmail1" 
+                        aria-describedby="emailHelp" 
+                        placeholder="Enter email"
+                        name="email" required
+                        #email="ngModel" 
+                        [(ngModel)]="userService.selectedUser.email" 
+                        [pattern]="emailRegex" 
+                        [ngClass]="{'is-invalid' :signUpform.submitted && !email.valid }">
+                        
+                    <div *ngIf="signUpform.submitted && email.errors">
+                        <label *ngIf="email.errors.required" class="validation-message">This field is required.</label>
+                        <label *ngIf="email.errors.pattern" class="validation-message">Invalid email address.</label>
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" 
+                        class="form-control" 
+                        id="exampleInputPassword1" 
+                        placeholder="Password"
+                        name="password" required minlength="4"
+                        #password="ngModel" 
+                        [(ngModel)]="userService.selectedUser.password"
+                        [ngClass]="{'is-invalid' :signUpform.submitted && !password.valid }">
+                    <div *ngIf="signUpform.submitted && password.errors">
+                        <label *ngIf="password.errors.required" class="validation-message">This field is required.</label>
+                        <label *ngIf="password.errors.minlength" class="validation-message">Enter atleast 4 characters.</label>
+                    </div>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword2">Confirm password</label>
+                <input type="password" 
+                        class="form-control" 
+                        id="exampleInputPassword2" 
+                        placeholder="Confirm password"
+                        name="confirmPassword" required
+                        #confirmPassword="ngModel" 
+                        [(ngModel)]="userService.selectedUser.confirmPassword"
+                        [ngClass]="{'is-invalid' :signUpform.submitted && !confirmPassword.valid }">
+                    <div *ngIf="signUpform.submitted && confirmPassword.errors">
+                        <label *ngIf="confirmPassword.errors.required" class="validation-message">This field is required.</label>
+                        <label *ngIf="notMatch" class="alert alert-danger">Password not matched</label>
+                    </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+            <a href="/" class="btn btn-link btn-block">Sign in</a>
+        </form>
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-4"></div>
+</div>
+
